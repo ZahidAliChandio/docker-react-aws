@@ -15,4 +15,7 @@ RUN npm run build
 
 #2nd phase
 FROM nginx
+# To intruct that this container needs port mapping to port 80.
+# Elasticbeanstalk will look for this EXPOSE intrunction.
+# EXPOSE 80 
 COPY --from=0 /app/build/ /usr/share/nginx/html
