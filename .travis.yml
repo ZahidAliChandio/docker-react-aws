@@ -1,0 +1,14 @@
+sudo: required
+language: generic 
+services:
+  - docker
+
+before_install: 
+  - docker build -t zahidchandio/proj4-frontend-docker-react-aws -f Dockerfile.dev .
+
+script:
+- docker run -e CI=true zahidchandio/proj4-frontend-docker-react-aws npm run test
+
+# Old one
+# script:
+#   - docker run USERNAME/docker-react npm run test -- --coverage

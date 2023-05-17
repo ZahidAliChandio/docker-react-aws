@@ -1,0 +1,28 @@
+# To simplify command we have to run
+# Eg: docker run -p 3000:3000 -v/app/node_modules -v$(pwd):/app <image_id>
+version: "3"
+services:
+  web:
+    environment:
+      - WATCHPACK_POLLING=true
+    build: 
+      # context is the path to the directory containing the Dockerfile
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      # .:/app - we want to map current folder outside the container to app folder inside the container.
+      - .:/app
+  tests:
+    environment:
+      - WATCHPACK_POLLING=true
+    build: 
+      # context is the path to the directory containing the Dockerfile
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
